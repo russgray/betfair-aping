@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BettingApi.cs" />
     <Compile Include="Entities\CurrencyRate.cs" />
     <Compile Include="Entities\AccountDetails.cs" />
     <Compile Include="AccountsApi.cs" />
