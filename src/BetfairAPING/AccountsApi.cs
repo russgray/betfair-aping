@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BetfairAPING.Entities;
+using BetfairAPING.Entities.Accounts;
 
 namespace BetfairAPING
 {

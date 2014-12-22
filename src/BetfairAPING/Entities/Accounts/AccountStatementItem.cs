@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BetfairAPING.Entities
+namespace BetfairAPING.Entities.Accounts
 {
     public class AccountStatementItem
     {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace BetfairAPING.Entities
+namespace BetfairAPING.Entities.Accounts
 {
     [DebuggerDisplay("Available={AvailableToBetBalance}, Exposure={Exposure}/{ExposureLimit}, Wallet={Wallet}")]
     public class AccountFunds

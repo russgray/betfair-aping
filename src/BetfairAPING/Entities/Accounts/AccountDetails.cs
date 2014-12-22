@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace BetfairAPING.Entities
+namespace BetfairAPING.Entities.Accounts
 {
     [DebuggerDisplay("Name={FirstName}, Surname={LastName}, TZ={Timezone}, Currency={CurrencyCode}")]
     public class AccountDetails

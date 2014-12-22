@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace BetfairAPING.Entities
+namespace BetfairAPING.Entities.Accounts
 {
     [DebuggerDisplay("CurrencyCode = {CurrencyCode}, Rate = {Rate}")]
     public class CurrencyRate

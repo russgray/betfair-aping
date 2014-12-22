@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using BetfairAPING.Entities;
+using BetfairAPING.Entities.Accounts;
 using RestSharp;
 
 namespace BetfairAPING

@@ -1,4 +1,5 @@
 ﻿using System;
+using BetfairAPING.Entities.Betting;
 using CommandLine;
 
 namespace BetfairAPING.Console
@@ -36,8 +37,28 @@ namespace BetfairAPING.Console
             //var funds = accountsApi.GetAccountFundsAsync().Result;
             //var stmt = accountsApi.GetAccountStatementAsync(new { recordCount = 5, itemDateRange = TimeRange.Since(TimeSpan.FromDays(365)) }).Result;
 
-            var currencies = accountsApi.ListCurrencyRatesAsync().Result;
+            //var currencies = accountsApi.ListCurrencyRatesAsync().Result;
 
+            var bettingApi = new BettingApi(options.AppKey, sessionToken: t.SessionToken);
+            //var comps = bettingApi.ListCompetitionsAsync(
+            //    new
+            //    {
+            //        filter = new MarketFilter
+            //        {
+            //            TurnInPlayEnabled = true
+            //        }
+            //    }).Result; 
+
+            //var comps = bettingApi.ListCountriesAsync(
+            //    new
+            //    {
+            //        filter = new MarketFilter
+            //                 {
+            //                     TurnInPlayEnabled = true
+            //                 }
+            //    }).Result;
+
+            var orders = bettingApi.ListCurrentOrdersAsync().Result;
             System.Console.WriteLine("Press any key...");
             System.Console.ReadKey();
         }

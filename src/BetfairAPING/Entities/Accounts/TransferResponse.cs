@@ -1,4 +1,4 @@
-﻿namespace BetfairAPING.Entities
+﻿namespace BetfairAPING.Entities.Accounts
 {
     public class TransferResponse
     {

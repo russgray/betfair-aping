@@ -43,18 +43,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BettingApi.cs" />
-    <Compile Include="Entities\CurrencyRate.cs" />
-    <Compile Include="Entities\AccountDetails.cs" />
+    <Compile Include="Entities\Betting\Competition.cs" />
+    <Compile Include="Entities\Betting\CompetitionResult.cs" />
+    <Compile Include="Entities\Accounts\CurrencyRate.cs" />
+    <Compile Include="Entities\Accounts\AccountDetails.cs" />
     <Compile Include="AccountsApi.cs" />
-    <Compile Include="Entities\AccountFunds.cs" />
-    <Compile Include="Entities\AccountStatementItem.cs" />
-    <Compile Include="Entities\AccountStatementReport.cs" />
-    <Compile Include="Entities\AuthenticationResponse.cs" />
+    <Compile Include="Entities\Accounts\AccountFunds.cs" />
+    <Compile Include="Entities\Accounts\AccountStatementItem.cs" />
+    <Compile Include="Entities\Accounts\AccountStatementReport.cs" />
+    <Compile Include="Entities\Accounts\AuthenticationResponse.cs" />
     <Compile Include="Authenticator.cs" />
     <Compile Include="BetfairApiException.cs" />
     <Compile Include="BetfairApiNextGen.cs" />
-    <Compile Include="Entities\StatementLegacyData.cs" />
-    <Compile Include="Entities\TransferResponse.cs" />
+    <Compile Include="Entities\Betting\CountryCodeResult.cs" />
+    <Compile Include="Entities\Betting\MarketFilter.cs" />
+    <Compile Include="Entities\Accounts\StatementLegacyData.cs" />
+    <Compile Include="Entities\Accounts\TransferResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeRange.cs" />
   </ItemGroup>

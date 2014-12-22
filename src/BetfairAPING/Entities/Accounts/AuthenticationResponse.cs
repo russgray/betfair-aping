@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace BetfairAPING.Entities
+namespace BetfairAPING.Entities.Accounts
 {
     [DebuggerDisplay("Token = {SessionToken}, Status = {LoginStatus}")]
     public class AuthenticationResponse
