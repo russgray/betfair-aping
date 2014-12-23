@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Betfair API-NG</id>
+    <id>BetfairAPING</id>
     <version>0.1.0-dev</version>
     <authors>russgray@gmail.com</authors>
     <owners>russgray@gmail.com</owners>
-    <licenseUrl>http://opensource.org/licenses/BSD-2-Clause</licenseUrl>
     <projectUrl>https://github.com/russgray/betfair-aping</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
+    <description>Client library for Betfair's API-NG (next gen)</description>
     <releaseNotes>Alpha build.</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>betfair tagwager</tags>
