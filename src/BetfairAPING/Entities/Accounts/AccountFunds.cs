@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using RestSharp.Serializers;
 
 namespace BetfairAPING.Entities.Accounts
 {
@@ -12,5 +13,11 @@ namespace BetfairAPING.Entities.Accounts
         public decimal DiscountRate { get; set; }
         public int PointsBalance { get; set; }
         public string Wallet { get; set; }
+
+        public override string ToString()
+        {
+            var s = new JsonSerializer();
+            return s.Serialize(this);
+        }
     }
 }

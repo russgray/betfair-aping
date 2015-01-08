@@ -44,6 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Options\AccountDetailsSubOptions.cs" />
+    <Compile Include="Options\AccountFundsSubOptions.cs" />
+    <Compile Include="Options\AccountStatementSubOptions.cs" />
+    <Compile Include="Options\CommonOptions.cs" />
+    <Compile Include="Options\Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,45 +1,38 @@
 ﻿using System;
-using BetfairAPING.Entities.Betting;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using BetfairAPING.Console.Options;
 using CommandLine;
 
 namespace BetfairAPING.Console
 {
-    class Options
-    {
-        [Option("username", HelpText = "Betfair username")]
-        public string Username { get; set; }
-
-        [Option("password", HelpText = "Betfair password")]
-        public string Password { get; set; }
-
-        [Option("cert", HelpText = "Path to Betfair API certificate")]
-        public string CertPath { get; set; }
-
-        [Option("app-key", HelpText = "Betfair app key")]
-        public string AppKey { get; set; }
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
-            var options = new Options();
+            var options = new Options.Options();
+            string invokedVerb = null;
+            object invokedVerbInstance = null;
+            if (!Parser.Default.ParseArguments(
+                args, options,
+                (verb, subOptions) =>
+                {
+                    invokedVerb = verb;
+                    invokedVerbInstance = subOptions;
+                }))
+            Environment.Exit(Parser.DefaultExitCodeFail);
 
-            if (!Parser.Default.ParseArguments(args, options))
-                return;
+            try
+            {
+                Process(invokedVerb, invokedVerbInstance).Wait();
+            }
+            catch (AggregateException ex)
+            {
+                foreach (var e in ex.InnerExceptions)
+                    System.Console.WriteLine(e);
+            }
 
-            var password = options.Password ?? GetPassword();
 
-            var t = Authenticator.Authenticate(options.Username, password, options.CertPath).Result;
-
-            var accountsApi = new AccountsApi(options.AppKey, sessionToken: t.SessionToken);
-            //var details = accountsApi.GetAccountDetailsAsync().Result;
-            //var funds = accountsApi.GetAccountFundsAsync().Result;
-            //var stmt = accountsApi.GetAccountStatementAsync(new { recordCount = 5, itemDateRange = TimeRange.Since(TimeSpan.FromDays(365)) }).Result;
-
-            //var currencies = accountsApi.ListCurrencyRatesAsync().Result;
-
-            var bettingApi = new BettingApi(options.AppKey, sessionToken: t.SessionToken);
             //var comps = bettingApi.ListCompetitionsAsync(
             //    new
             //    {
@@ -58,9 +51,48 @@ namespace BetfairAPING.Console
             //                 }
             //    }).Result;
 
-            var orders = bettingApi.ListCurrentOrdersAsync().Result;
-            System.Console.WriteLine("Press any key...");
-            System.Console.ReadKey();
+            //var orders = bettingApi.ListCurrentOrdersAsync().Result;
+
+            if (Debugger.IsAttached)
+            {
+                System.Console.WriteLine("Press any key...");
+                System.Console.ReadKey();
+            }
+        }
+
+        static async Task Process(string verb, object subOptions)
+        {
+            var password = GetPassword();
+            var commonOptions = (CommonOptions)subOptions;
+
+            var authenticationResponse = await Authenticator.Authenticate(commonOptions.Username, password, commonOptions.CertPath);
+            var accountsApi = new AccountsApi(commonOptions.AppKey, sessionToken: authenticationResponse.SessionToken);
+            var bettingApi = new BettingApi(commonOptions.AppKey, sessionToken: authenticationResponse.SessionToken);
+
+            object result = null;
+            switch (verb)
+            {
+                case "getaccountdetails":
+                    result = await accountsApi.GetAccountDetailsAsync();
+                    break;
+                case "getaccountfunds":
+                    result = await accountsApi.GetAccountFundsAsync();
+                    break;
+                case "getaccountstatement":
+                    var cmdSubOptions = (AccountStatementSubOptions)subOptions;
+                    result = await accountsApi.GetAccountStatementAsync(new { recordCount = cmdSubOptions.RecordCount, itemDateRange = TimeRange.Since(TimeSpan.FromDays(cmdSubOptions.FromDays)) });
+                    break;
+                //case "ListCurrencyRates":
+                //    result = await accountsApi.ListCurrencyRatesAsync();
+                //    break;
+                default:
+                    System.Console.WriteLine("Can't handle {0} API call", verb);
+                    break;
+            }
+
+            if (result != null)
+                System.Console.WriteLine(result);
+          
         }
 
         static string GetPassword()
