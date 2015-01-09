@@ -50,8 +50,8 @@ Target "GenerateAssemblyInfo" (fun _ ->
          Attribute.Description projectDescription
          Attribute.Guid "2a120bd3-a369-47ed-a67d-26823d332807"
          Attribute.Product projectName
-         Attribute.Version (versionJson?AssemblySemVer.AsString())
-         Attribute.FileVersion (versionJson?AssemblyFileSemVer.AsString())
+         Attribute.Version (versionJson?ClassicVersion.AsString())
+         Attribute.FileVersion (versionJson?AssemblySemVer.AsString())
          Attribute.InformationalVersion (versionJson?InformationalVersion.AsString())]
 
     CreateCSharpAssemblyInfo "./src/BetfairAPING.Console/Properties/AssemblyInfo.cs"
@@ -59,8 +59,8 @@ Target "GenerateAssemblyInfo" (fun _ ->
          Attribute.Description "Command-line interface for Betfair API-NG"
          Attribute.Guid "2a120bd3-a369-47ed-a67d-26823d332807"
          Attribute.Product "BetfairAPING.Console"
-         Attribute.Version (versionJson?AssemblySemVer.AsString())
-         Attribute.FileVersion (versionJson?AssemblyFileSemVer.AsString())
+         Attribute.Version (versionJson?ClassicVersion.AsString())
+         Attribute.FileVersion (versionJson?AssemblySemVer.AsString())
          Attribute.InformationalVersion (versionJson?InformationalVersion.AsString())]
 )
 
