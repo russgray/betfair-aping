@@ -1,6 +1,6 @@
 // include Fake lib
-#r "packages/FAKE/tools/FakeLib.dll"
-#r "packages/FSharp.Data/lib/net40/FSharp.Data.dll"
+#r "src/packages/FAKE/tools/FakeLib.dll"
+#r "src/packages/FSharp.Data/lib/net40/FSharp.Data.dll"
 
 open System
 open Fake
@@ -47,7 +47,6 @@ let versionJson = getVersionInfo |> JsonValue.Parse
 Target "Clean" (fun _ ->
     CleanDir buildDir
     CleanDir packagingRoot
-    CleanDir sourcePackagesDir
 )
 
 Target "RestoreSrcPackages" (fun _ ->
