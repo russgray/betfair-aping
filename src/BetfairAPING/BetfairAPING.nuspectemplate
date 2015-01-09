@@ -15,4 +15,5 @@
     <tags>Betfair APING Tagwager</tags>
     @dependencies@
   </metadata>
+  @files@
 </package>

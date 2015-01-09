@@ -67,7 +67,7 @@ Target "GenerateAssemblyInfo" (fun _ ->
          Attribute.Guid "2a120bd3-a369-47ed-a67d-26823d332807"
          Attribute.Product projectName
          Attribute.Version (versionJson?ClassicVersion.AsString())
-         Attribute.FileVersion (versionJson?AssemblySemVer.AsString())
+         Attribute.FileVersion (versionJson?ClassicVersion.AsString())
          Attribute.InformationalVersion (versionJson?InformationalVersion.AsString())]
 
     CreateCSharpAssemblyInfo "./src/BetfairAPING.Console/Properties/AssemblyInfo.cs"
@@ -76,7 +76,7 @@ Target "GenerateAssemblyInfo" (fun _ ->
          Attribute.Guid "2a120bd3-a369-47ed-a67d-26823d332807"
          Attribute.Product "BetfairAPING.Console"
          Attribute.Version (versionJson?ClassicVersion.AsString())
-         Attribute.FileVersion (versionJson?AssemblySemVer.AsString())
+         Attribute.FileVersion (versionJson?ClassicVersion.AsString())
          Attribute.InformationalVersion (versionJson?InformationalVersion.AsString())]
 )
 
@@ -102,6 +102,13 @@ Target "CreatePackage" (fun _ ->
             Summary = projectSummary
             Tags = "betfair, tagwager"
             Dependencies = [ "RestSharp", GetPackageVersion "./src/packages" "RestSharp"]
+            Files = [
+              (@"LICENSE", None, None)
+              (@"README.md", None, None)
+              (@"lib\net45\*.dll", Some @"lib\net45", None)
+              (@"lib\net45\*.pdb", Some @"lib\net45", None)
+              (@"..\..\src\**\*.cs", Some "src", Some "..\..\src\**\TemporaryGeneratedFile*.cs")
+            ]
             WorkingDir = packagingDir
             Version = (versionJson?NuGetVersion.AsString())
             SymbolPackage = NugetSymbolPackage.Nuspec
