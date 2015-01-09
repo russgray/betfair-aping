@@ -8,22 +8,25 @@ open Fake.AssemblyInfoFile
 open FSharp.Data
 open FSharp.Data.JsonExtensions
 
-let authors = ["Russell Gray <russgray@gmail.com>"]
 
-// Project name and description
+// Project meta
+let authors = ["Russell Gray <russgray@gmail.com>"]
 let projectName = "BetfairAPING"
 let projectDescription = "Client library for Betfair API-NG"
 let projectSummary = projectDescription // TODO: write a summary
 
 
-RestorePackages()
-
 // Properties
 let gitVersion = environVarOrDefault "GitVersion" "GitVersion"
-let buildDir = "./build/"
-let packagingRoot = "./packaging/"
-let packagingDir = packagingRoot @@ "betfair-aping"
 let buildMode = getBuildParamOrDefault "buildMode" "Debug"
+
+
+// Directories
+let buildDir = "./build"
+let packagingRoot = "./packaging"
+let sourcePackagesDir = "./src/packages"
+let packagingDir = packagingRoot @@ "betfair-aping"
+
 
 let getVersionInfo =
     // Execute GitVersion
@@ -39,9 +42,23 @@ let getVersionInfo =
 
 let versionJson = getVersionInfo |> JsonValue.Parse
 
+
 // Targets
 Target "Clean" (fun _ ->
     CleanDir buildDir
+    CleanDir packagingRoot
+    CleanDir sourcePackagesDir
+)
+
+Target "RestoreSrcPackages" (fun _ ->
+    let restore =
+        RestorePackage (fun p ->
+            { p with
+                OutputPath = sourcePackagesDir
+            })
+
+    !! "./src/**/packages.config"
+    |> Seq.iter (restore)
 )
 
 Target "GenerateAssemblyInfo" (fun _ ->
@@ -100,6 +117,7 @@ Target "Default" (fun _ ->
 
 // Dependencies
 "Clean"
+  ==> "RestoreSrcPackages"
   ==> "GenerateAssemblyInfo"
   ==> "BuildApp"
   ==> "CreatePackage"
