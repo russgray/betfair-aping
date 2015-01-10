@@ -65,6 +65,8 @@
     <Compile Include="Entities\Betting\CurrentOrderSummaryReport.cs" />
     <Compile Include="Entities\Betting\Event.cs" />
     <Compile Include="Entities\Betting\EventResult.cs" />
+    <Compile Include="Entities\Betting\EventType.cs" />
+    <Compile Include="Entities\Betting\EventTypeResult.cs" />
     <Compile Include="Entities\Betting\ItemDescription.cs" />
     <Compile Include="Entities\Betting\MarketFilter.cs" />
     <Compile Include="Entities\Accounts\StatementLegacyData.cs" />

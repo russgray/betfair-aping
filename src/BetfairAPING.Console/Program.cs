@@ -138,6 +138,13 @@ namespace BetfairAPING.Console
                             filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
                         });
                     break;
+                case "listeventtypes":
+                    result = await bettingApi.ListEventTypesAsync(
+                        new
+                        {
+                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
+                        });
+                    break;
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);
                     break;

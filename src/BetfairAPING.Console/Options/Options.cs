@@ -32,6 +32,9 @@ namespace BetfairAPING.Console.Options
         [VerbOption("listevents")]
         public MarketFilterSubOptions ListEventsVerb { get; set; }
 
+        [VerbOption("listeventtypes")]
+        public MarketFilterSubOptions ListEventTypesVerb { get; set; }
+
         [HelpVerbOption]
         public string GetUsage(string verb)
         {
