@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Security;
 using System.Threading.Tasks;
 using BetfairAPING.Console.Options;
 using BetfairAPING.Entities.Betting;
@@ -36,17 +35,6 @@ namespace BetfairAPING.Console
                 foreach (var e in ex.InnerExceptions)
                     System.Console.WriteLine(e);
             }
-
-            //var comps = bettingApi.ListCountriesAsync(
-            //    new
-            //    {
-            //        filter = new MarketFilter
-            //                 {
-            //                     TurnInPlayEnabled = true
-            //                 }
-            //    }).Result;
-
-            //var orders = bettingApi.ListCurrentOrdersAsync().Result;
 
             if (Debugger.IsAttached)
             {
@@ -127,7 +115,21 @@ namespace BetfairAPING.Console
                             marketIds = cmdSubOptions.MarketIdsAsSet,
                         });
                     break;
-                    
+                }
+                case "listclearedorders":
+                {
+                    var cmdSubOptions = (ListClearedOrdersSubOptions) subOptions;
+                    result = await bettingApi.ListClearedOrdersAsync(
+                        new
+                        {
+                            betStatus = cmdSubOptions.BetStatus,
+                            eventTypeIds = cmdSubOptions.EventTypeIdsAsSet,
+                            eventIds = cmdSubOptions.EventIdsAsSet,
+                            marketIds = cmdSubOptions.MarketIdsAsSet,
+                            runnerIds = cmdSubOptions.RunnerIdsAsSet,
+                            betIds = cmdSubOptions.BetIdsAsSet,
+                        });
+                    break;
                 }
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);

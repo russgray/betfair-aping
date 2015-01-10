@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BettingApi.cs" />
+    <Compile Include="Entities\Betting\ClearedOrderSummary.cs" />
+    <Compile Include="Entities\Betting\ClearedOrderSummaryReport.cs" />
     <Compile Include="Entities\Betting\Competition.cs" />
     <Compile Include="Entities\Betting\CompetitionResult.cs" />
     <Compile Include="Entities\Accounts\CurrencyRate.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Entities\Betting\CountryCodeResult.cs" />
     <Compile Include="Entities\Betting\CurrentOrderSummary.cs" />
     <Compile Include="Entities\Betting\CurrentOrderSummaryReport.cs" />
+    <Compile Include="Entities\Betting\ItemDescription.cs" />
     <Compile Include="Entities\Betting\MarketFilter.cs" />
     <Compile Include="Entities\Accounts\StatementLegacyData.cs" />
     <Compile Include="Entities\Accounts\TransferResponse.cs" />

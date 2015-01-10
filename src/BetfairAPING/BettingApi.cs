@@ -26,5 +26,10 @@ namespace BetfairAPING
         {
             return await SendRequest<CurrentOrderSummaryReport>("listCurrentOrders", payload: payload);
         }
+
+        public async Task<ClearedOrderSummaryReport> ListClearedOrdersAsync(dynamic payload = null)
+        {
+            return await SendRequest<ClearedOrderSummaryReport>("listClearedOrders", payload: payload);
+        }
     }
 }
