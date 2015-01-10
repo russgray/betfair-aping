@@ -63,6 +63,8 @@
     <Compile Include="Entities\Betting\CountryCodeResult.cs" />
     <Compile Include="Entities\Betting\CurrentOrderSummary.cs" />
     <Compile Include="Entities\Betting\CurrentOrderSummaryReport.cs" />
+    <Compile Include="Entities\Betting\Event.cs" />
+    <Compile Include="Entities\Betting\EventResult.cs" />
     <Compile Include="Entities\Betting\ItemDescription.cs" />
     <Compile Include="Entities\Betting\MarketFilter.cs" />
     <Compile Include="Entities\Accounts\StatementLegacyData.cs" />
