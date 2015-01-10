@@ -41,5 +41,10 @@ namespace BetfairAPING
         {
             return await SendRequest<List<EventTypeResult>>("listEventTypes", payload: payload);
         }
+
+        public async Task<List<MarketBook>> ListMarketBookAsync(dynamic payload = null)
+        {
+            return await SendRequest<List<MarketBook>>("listMarketBook", payload: payload);
+        }
     }
 }

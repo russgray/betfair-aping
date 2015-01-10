@@ -145,6 +145,19 @@ namespace BetfairAPING.Console
                             filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
                         });
                     break;
+                case "listmarketbook":
+                {
+                    var cmdSubOptions = (ListMarketBookSubOptions) subOptions;
+                    result = await bettingApi.ListMarketBookAsync(
+                        new
+                        {
+                            marketIds = cmdSubOptions.MarketIdsAsSet,
+                            priceProjection = cmdSubOptions.PriceProjection,
+                            orderProjection = cmdSubOptions.OrderProjection,
+                            matchProjection = cmdSubOptions.MatchProjection,
+                        });
+                    break;
+                }
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);
                     break;

@@ -67,11 +67,17 @@
     <Compile Include="Entities\Betting\EventResult.cs" />
     <Compile Include="Entities\Betting\EventType.cs" />
     <Compile Include="Entities\Betting\EventTypeResult.cs" />
+    <Compile Include="Entities\Betting\ExchangePrices.cs" />
     <Compile Include="Entities\Betting\ItemDescription.cs" />
+    <Compile Include="Entities\Betting\MarketBook.cs" />
     <Compile Include="Entities\Betting\MarketFilter.cs" />
     <Compile Include="Entities\Accounts\StatementLegacyData.cs" />
     <Compile Include="Entities\Accounts\TransferResponse.cs" />
+    <Compile Include="Entities\Betting\Match.cs" />
+    <Compile Include="Entities\Betting\Order.cs" />
     <Compile Include="Entities\Betting\PriceSize.cs" />
+    <Compile Include="Entities\Betting\Runner.cs" />
+    <Compile Include="Entities\Betting\StartingPrices.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeRange.cs" />
