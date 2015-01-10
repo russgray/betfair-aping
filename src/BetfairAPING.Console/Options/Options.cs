@@ -20,6 +20,9 @@ namespace BetfairAPING.Console.Options
         [VerbOption("listcompetitions")]
         public ListCompetitionsSubOptions ListCompetitionsVerb { get; set; }
 
+        [VerbOption("listcountries")]
+        public MarketFilterSubOptions ListCountriesVerb { get; set; }
+
         [HelpVerbOption]
         public string GetUsage(string verb)
         {

@@ -105,15 +105,19 @@ namespace BetfairAPING.Console
 
                 case "listcompetitions":
                 {
-                    var cmdSubOptions = (ListCompetitionsSubOptions) subOptions;
                     result = await bettingApi.ListCompetitionsAsync(
                         new
                         {
-                            filter = new MarketFilter
-                            {
-                                TextQuery = cmdSubOptions.TextQuery,
-                                EventTypeIds = cmdSubOptions.EventTypeIds == null ? null : new HashSet<string>(cmdSubOptions.EventTypeIds.Split(','))
-                            }
+                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
+                        });
+                    break;
+                }
+                case "listcountries":
+                {
+                    result = await bettingApi.ListCountriesAsync(
+                        new
+                        {
+                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
                         });
                     break;
                 }
@@ -131,6 +135,23 @@ namespace BetfairAPING.Console
                 else
                     System.Console.WriteLine(result);
             }
+        }
+
+        static MarketFilter CreateMarketFilterFromOptions(MarketFilterSubOptions options)
+        {
+            return new MarketFilter
+            {
+                TextQuery = options.TextQuery,
+                EventTypeIds = ParseCommandLineList(options.EventTypeIds),
+                EventIds = ParseCommandLineList(options.EventIds),
+                CompetitionIds = ParseCommandLineList(options.CompetitionIds),
+                MarketIds = ParseCommandLineList(options.MarketIds),
+            };
+        }
+
+        static HashSet<string> ParseCommandLineList(string option)
+        {
+            return option == null ? null : new HashSet<string>(option.Split(','));
         }
 
         static UserPass GetCredentials(string credentialStoreName)
