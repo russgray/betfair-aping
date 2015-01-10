@@ -104,13 +104,16 @@ Target "CreatePackage" (fun _ ->
             OutputPath = packagingRoot
             Summary = projectSummary
             Tags = "betfair, tagwager"
-            Dependencies = [ "RestSharp", GetPackageVersion "./src/packages" "RestSharp"]
+            Dependencies = [ 
+                ("RestSharp", GetPackageVersion "./src/packages" "RestSharp")
+                ("Newtonsoft.Json", GetPackageVersion "./src/packages" "Newtonsoft.Json")
+            ]
             Files = [
-              (@"LICENSE", None, None)
-              (@"README.md", None, None)
-              (@"lib\net45\*.dll", Some @"lib\net45", None)
-              (@"lib\net45\*.pdb", Some @"lib\net45", None)
-              (@"..\..\src\**\*.cs", Some "src", Some "..\..\src\**\TemporaryGeneratedFile*.cs")
+                (@"LICENSE", None, None)
+                (@"README.md", None, None)
+                (@"lib\net45\*.dll", Some @"lib\net45", None)
+                (@"lib\net45\*.pdb", Some @"lib\net45", None)
+                (@"..\..\src\**\*.cs", Some "src", Some "..\..\src\**\TemporaryGeneratedFile*.cs")
             ]
             WorkingDir = packagingDir
             Version = (versionJson?NuGetVersion.AsString())

@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 [assembly: GuidAttribute("2a120bd3-a369-47ed-a67d-26823d332807")]
 [assembly: AssemblyProductAttribute("BetfairAPING")]
 [assembly: AssemblyCopyrightAttribute("Copyright 2015 Russell Gray <russgray@gmail.com>")]
-[assembly: AssemblyVersionAttribute("0.2.0.17")]
-[assembly: AssemblyFileVersionAttribute("0.2.0.17")]
-[assembly: AssemblyInformationalVersionAttribute("0.2.0-unstable.17+17.Branch.develop.Sha.0d4bc748ebbbeec857b5e8ed36c192dbb4e18f22")]
+[assembly: AssemblyVersionAttribute("0.2.0.21")]
+[assembly: AssemblyFileVersionAttribute("0.2.0.21")]
+[assembly: AssemblyInformationalVersionAttribute("0.2.0-unstable.21+21.Branch.develop.Sha.4fadbda523fdb30adee57e5d865cb047d819cd5e")]
 namespace System {
     internal static class AssemblyVersionInformation {
-        internal const string Version = "0.2.0.17";
+        internal const string Version = "0.2.0.21";
     }
 }
