@@ -59,9 +59,12 @@
     <Compile Include="BetfairApiException.cs" />
     <Compile Include="BetfairApiNextGen.cs" />
     <Compile Include="Entities\Betting\CountryCodeResult.cs" />
+    <Compile Include="Entities\Betting\CurrentOrderSummary.cs" />
+    <Compile Include="Entities\Betting\CurrentOrderSummaryReport.cs" />
     <Compile Include="Entities\Betting\MarketFilter.cs" />
     <Compile Include="Entities\Accounts\StatementLegacyData.cs" />
     <Compile Include="Entities\Accounts\TransferResponse.cs" />
+    <Compile Include="Entities\Betting\PriceSize.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeRange.cs" />

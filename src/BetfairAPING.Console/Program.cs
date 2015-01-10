@@ -78,7 +78,7 @@ namespace BetfairAPING.Console
             object result = null;
             switch (verb)
             {
-                #region Accounts API
+                    #region Accounts API
 
                 case "getaccountdetails":
                     result = await accountsApi.GetAccountDetailsAsync();
@@ -101,25 +101,33 @@ namespace BetfairAPING.Console
                     result = await accountsApi.ListCurrencyRatesAsync();
                     break;
 
-                #endregion
+                    #endregion
 
                 case "listcompetitions":
-                {
                     result = await bettingApi.ListCompetitionsAsync(
                         new
                         {
                             filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
                         });
                     break;
-                }
                 case "listcountries":
-                {
                     result = await bettingApi.ListCountriesAsync(
                         new
                         {
                             filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
                         });
                     break;
+                case "listcurrentorders":
+                {
+                    var cmdSubOptions = (ListCurrentOrdersSubOptions) subOptions;
+                    result = await bettingApi.ListCurrentOrdersAsync(
+                        new
+                        {
+                            betIds = cmdSubOptions.BetIdsAsSet,
+                            marketIds = cmdSubOptions.MarketIdsAsSet,
+                        });
+                    break;
+                    
                 }
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);
