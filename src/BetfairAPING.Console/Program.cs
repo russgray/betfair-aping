@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security;
 using System.Threading.Tasks;
 using BetfairAPING.Console.Options;
+using BetfairAPING.Entities.Betting;
 using CommandLine;
+using CredentialManagement;
 
 namespace BetfairAPING.Console
 {
@@ -33,16 +37,6 @@ namespace BetfairAPING.Console
                     System.Console.WriteLine(e);
             }
 
-
-            //var comps = bettingApi.ListCompetitionsAsync(
-            //    new
-            //    {
-            //        filter = new MarketFilter
-            //        {
-            //            TurnInPlayEnabled = true
-            //        }
-            //    }).Result; 
-
             //var comps = bettingApi.ListCountriesAsync(
             //    new
             //    {
@@ -63,16 +57,29 @@ namespace BetfairAPING.Console
 
         static async Task Process(string verb, object subOptions)
         {
-            var password = GetPassword();
             var commonOptions = (CommonOptions)subOptions;
+            string username, password;
+            if (string.IsNullOrEmpty(commonOptions.CredentialStoreName))
+            {
+                username = commonOptions.Username;
+                password = GetPassword();
+            }
+            else
+            {
+                var creds = GetCredentials(commonOptions.CredentialStoreName);
+                username = creds.Username;
+                password = creds.Password;
+            }
 
-            var authenticationResponse = await Authenticator.Authenticate(commonOptions.Username, password, commonOptions.CertPath);
+            var authenticationResponse = await Authenticator.Authenticate(username, password, commonOptions.CertPath);
             var accountsApi = new AccountsApi(commonOptions.AppKey, sessionToken: authenticationResponse.SessionToken);
             var bettingApi = new BettingApi(commonOptions.AppKey, sessionToken: authenticationResponse.SessionToken);
 
             object result = null;
             switch (verb)
             {
+                #region Accounts API
+
                 case "getaccountdetails":
                     result = await accountsApi.GetAccountDetailsAsync();
                     break;
@@ -80,12 +87,36 @@ namespace BetfairAPING.Console
                     result = await accountsApi.GetAccountFundsAsync();
                     break;
                 case "getaccountstatement":
-                    var cmdSubOptions = (AccountStatementSubOptions)subOptions;
-                    result = await accountsApi.GetAccountStatementAsync(new { recordCount = cmdSubOptions.RecordCount, itemDateRange = TimeRange.Since(TimeSpan.FromDays(cmdSubOptions.FromDays)) });
+                {
+                    var cmdSubOptions = (AccountStatementSubOptions) subOptions;
+                    result = await accountsApi.GetAccountStatementAsync(
+                        new
+                        {
+                            recordCount = cmdSubOptions.RecordCount,
+                            itemDateRange = TimeRange.Since(TimeSpan.FromDays(cmdSubOptions.FromDays))
+                        });
                     break;
+                }
                 case "listcurrencyrates":
                     result = await accountsApi.ListCurrencyRatesAsync();
                     break;
+
+                #endregion
+
+                case "listcompetitions":
+                {
+                    var cmdSubOptions = (ListCompetitionsSubOptions) subOptions;
+                    result = await bettingApi.ListCompetitionsAsync(
+                        new
+                        {
+                            filter = new MarketFilter
+                            {
+                                TextQuery = cmdSubOptions.TextQuery,
+                                EventTypeIds = cmdSubOptions.EventTypeIds == null ? null : new HashSet<string>(cmdSubOptions.EventTypeIds.Split(','))
+                            }
+                        });
+                    break;
+                }
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);
                     break;
@@ -100,6 +131,17 @@ namespace BetfairAPING.Console
                 else
                     System.Console.WriteLine(result);
             }
+        }
+
+        static UserPass GetCredentials(string credentialStoreName)
+        {
+            var cm = new Credential { Target = credentialStoreName };
+            if (!cm.Exists())
+                return null;
+
+            cm.Load();
+            var up = new UserPass(cm);
+            return up;
         }
 
         static string GetPassword()
@@ -119,7 +161,7 @@ namespace BetfairAPING.Console
                     if (!string.IsNullOrEmpty(password))
                     {
                         password = password.Substring
-                        (0, password.Length - 1);
+                            (0, password.Length - 1);
                     }
                     info = System.Console.ReadKey(true);
                 }
@@ -128,6 +170,18 @@ namespace BetfairAPING.Console
             System.Console.WriteLine(new string('*', password.Length));
             
             return password;
+        }
+
+        internal class UserPass
+        {
+            public UserPass(Credential cm)
+            {
+                Username = cm.Username;
+                Password = cm.Password;
+            }
+
+            public string Username { get; private set; }
+            public string Password { get; private set; }
         }
     }
 }

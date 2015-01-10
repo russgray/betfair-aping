@@ -1,4 +1,5 @@
 using CommandLine;
+using CommandLine.Text;
 
 namespace BetfairAPING.Console.Options
 {
@@ -15,5 +16,14 @@ namespace BetfairAPING.Console.Options
 
         [VerbOption("listcurrencyrates")]
         public ListCurrencyRatesSubOptions ListCurrencyRatesVerb { get; set; }
+
+        [VerbOption("listcompetitions")]
+        public ListCompetitionsSubOptions ListCompetitionsVerb { get; set; }
+
+        [HelpVerbOption]
+        public string GetUsage(string verb)
+        {
+            return HelpText.AutoBuild(this, verb);
+        }
     }
 }

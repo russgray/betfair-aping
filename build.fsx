@@ -14,6 +14,7 @@ let authors = ["Russell Gray <russgray@gmail.com>"]
 let projectName = "BetfairAPING"
 let projectDescription = "Client library for Betfair API-NG"
 let projectSummary = projectDescription // TODO: write a summary
+let copyright = "Copyright 2015 Russell Gray <russgray@gmail.com>"
 
 
 // Properties
@@ -66,6 +67,7 @@ Target "GenerateAssemblyInfo" (fun _ ->
          Attribute.Description projectDescription
          Attribute.Guid "2a120bd3-a369-47ed-a67d-26823d332807"
          Attribute.Product projectName
+         Attribute.Copyright copyright
          Attribute.Version (versionJson?ClassicVersion.AsString())
          Attribute.FileVersion (versionJson?ClassicVersion.AsString())
          Attribute.InformationalVersion (versionJson?InformationalVersion.AsString())]
@@ -75,6 +77,7 @@ Target "GenerateAssemblyInfo" (fun _ ->
          Attribute.Description "Command-line interface for Betfair API-NG"
          Attribute.Guid "2a120bd3-a369-47ed-a67d-26823d332807"
          Attribute.Product "BetfairAPING.Console"
+         Attribute.Copyright copyright
          Attribute.Version (versionJson?ClassicVersion.AsString())
          Attribute.FileVersion (versionJson?ClassicVersion.AsString())
          Attribute.InformationalVersion (versionJson?InformationalVersion.AsString())]

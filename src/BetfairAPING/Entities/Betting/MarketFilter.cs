@@ -7,7 +7,7 @@ namespace BetfairAPING.Entities.Betting
         public string TextQuery { get; set; }
         public HashSet<string> ExchangeIds { get; set; }
         public HashSet<string> EventTypeIds { get; set; }
-        public HashSet<string> EventIds { get; set; }
+        public HashSet<string> EventIds { get; set; } 
         public HashSet<string> CompetitionIds { get; set; }
         public HashSet<string> MarketIds { get; set; }
         public HashSet<string> Venues { get; set; }

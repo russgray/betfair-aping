@@ -12,6 +12,7 @@ namespace BetfairAPING
         protected readonly string _sessionToken;
         protected readonly RestClient _client;
         protected readonly string _resourceRoot;
+        private readonly CamelCaseJsonSerializer _serializer;
 
         protected BetfairApiNextGen(string appKey, string subdomain, string apiType, string sessionToken = null)
         {
@@ -20,11 +21,15 @@ namespace BetfairAPING
             _sessionToken = sessionToken;
             _resourceRoot = string.Format("exchange/{0}/rest/v1.0", apiType);
             _client = new RestClient(string.Format("https://{0}.betfair.com", _subdomain));
+            _serializer = new CamelCaseJsonSerializer();
         }
 
         protected async Task<T> SendRequest<T>(string operation, dynamic payload = null, string sessionToken = null) where T: new()
         {
-            var req = new RestRequest(string.Format("{0}/{1}/", _resourceRoot, operation), Method.POST);
+            var req =  new RestRequest(string.Format("{0}/{1}/", _resourceRoot, operation), Method.POST)
+            {
+                JsonSerializer = _serializer
+            };
             SetHeaders(req, sessionToken);
             if (payload != null)
                 req.AddJsonBody(payload);

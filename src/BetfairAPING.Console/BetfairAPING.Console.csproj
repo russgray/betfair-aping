@@ -35,6 +35,9 @@
     <Reference Include="CommandLine">
       <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
     </Reference>
+    <Reference Include="CredentialManagement">
+      <HintPath>..\packages\CredentialManagement.1.0.2\lib\net35\CredentialManagement.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,7 +51,9 @@
     <Compile Include="Options\AccountFundsSubOptions.cs" />
     <Compile Include="Options\AccountStatementSubOptions.cs" />
     <Compile Include="Options\CommonOptions.cs" />
+    <Compile Include="Options\ListCompetitionsSubOptions.cs" />
     <Compile Include="Options\ListCurrencyRatesSubOptions.cs" />
+    <Compile Include="Options\MarketFilterSubOptions.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
