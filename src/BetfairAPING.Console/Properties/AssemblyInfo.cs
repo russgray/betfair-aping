@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescriptionAttribute("Command-line interface for Betfair API-NG")]
 [assembly: GuidAttribute("2a120bd3-a369-47ed-a67d-26823d332807")]
 [assembly: AssemblyProductAttribute("BetfairAPING.Console")]
-[assembly: AssemblyVersionAttribute("0.2.0.12")]
-[assembly: AssemblyFileVersionAttribute("0.2.0.0")]
-[assembly: AssemblyInformationalVersionAttribute("0.2.0-unstable.12+12.Branch.develop.Sha.9e2cf638d454d443444b7289c316d1f84dbffed2")]
+[assembly: AssemblyVersionAttribute("0.2.0.16")]
+[assembly: AssemblyFileVersionAttribute("0.2.0.16")]
+[assembly: AssemblyInformationalVersionAttribute("0.2.0-unstable.16+16.Branch.develop.Sha.8541dbde960a871f3fbf49f0856690b99a254baa")]
 namespace System {
     internal static class AssemblyVersionInformation {
-        internal const string Version = "0.2.0.12";
+        internal const string Version = "0.2.0.16";
     }
 }

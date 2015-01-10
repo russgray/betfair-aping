@@ -12,5 +12,8 @@ namespace BetfairAPING.Console.Options
 
         [VerbOption("getaccountstatement")]
         public AccountStatementSubOptions GetAccountStatementVerb { get; set; }
+
+        [VerbOption("listcurrencyrates")]
+        public ListCurrencyRatesSubOptions ListCurrencyRatesVerb { get; set; }
     }
 }

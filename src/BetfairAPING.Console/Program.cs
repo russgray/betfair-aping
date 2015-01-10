@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using BetfairAPING.Console.Options;
@@ -82,17 +83,23 @@ namespace BetfairAPING.Console
                     var cmdSubOptions = (AccountStatementSubOptions)subOptions;
                     result = await accountsApi.GetAccountStatementAsync(new { recordCount = cmdSubOptions.RecordCount, itemDateRange = TimeRange.Since(TimeSpan.FromDays(cmdSubOptions.FromDays)) });
                     break;
-                //case "ListCurrencyRates":
-                //    result = await accountsApi.ListCurrencyRatesAsync();
-                //    break;
+                case "listcurrencyrates":
+                    result = await accountsApi.ListCurrencyRatesAsync();
+                    break;
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);
                     break;
             }
 
             if (result != null)
-                System.Console.WriteLine(result);
-          
+            {
+                var rs = result as IEnumerable;
+                if (rs != null)
+                    foreach (var r in rs)
+                        System.Console.WriteLine(r);
+                else
+                    System.Console.WriteLine(result);
+            }
         }
 
         static string GetPassword()
