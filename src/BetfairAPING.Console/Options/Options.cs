@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CommandLine;
 using CommandLine.Text;
 
@@ -39,30 +38,13 @@ namespace BetfairAPING.Console.Options
         [VerbOption("listmarketbook")]
         public ListMarketBookSubOptions ListMarketBookVerb { get; set; }
 
+        [VerbOption("listmarketcatalogue")]
+        public ListMarketCatalogueSubOptions ListMarketCatalogueVerb { get; set; }
+
         [HelpVerbOption]
         public string GetUsage(string verb)
         {
             return HelpText.AutoBuild(this, verb);
-        }
-    }
-
-    class ListMarketBookSubOptions : CommonOptions
-    {
-        [Option("market-ids")]
-        public string MarketIds { get; set; }
-
-        [Option("price-projection")]
-        public string PriceProjection { get; set; }
-
-        [Option("order-projection")]
-        public string OrderProjection { get; set; }
-
-        [Option("match-projection")]
-        public string MatchProjection { get; set; }
-    
-        internal HashSet<string> MarketIdsAsSet
-        {
-            get { return MarketIds == null ? null : new HashSet<string>(MarketIds.Split(',')); }
         }
     }
 }

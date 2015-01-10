@@ -55,6 +55,8 @@
     <Compile Include="Options\ListCompetitionsSubOptions.cs" />
     <Compile Include="Options\ListCurrencyRatesSubOptions.cs" />
     <Compile Include="Options\ListCurrentOrdersSubOptions.cs" />
+    <Compile Include="Options\ListMarketBookSubOptions.cs" />
+    <Compile Include="Options\ListMarketCatalogueSubOptions.cs" />
     <Compile Include="Options\MarketFilterSubOptions.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Program.cs" />

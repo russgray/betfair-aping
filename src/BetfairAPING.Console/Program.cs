@@ -158,6 +158,19 @@ namespace BetfairAPING.Console
                         });
                     break;
                 }
+                case "listmarketcatalogue":
+                {
+                    var cmdSubOptions = (ListMarketCatalogueSubOptions) subOptions;
+                    result = await bettingApi.ListMarketCatalogueAsync(
+                        new
+                        {
+                            filter = CreateMarketFilterFromOptions(cmdSubOptions),
+                            marketProjection = cmdSubOptions.MarketProjectionAsSet,
+                            sort = cmdSubOptions.MarketSort,
+                            maxResults = cmdSubOptions.MaxResults,
+                        });
+                    break;
+                }
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);
                     break;
