@@ -44,6 +44,9 @@ let getVersionInfo =
 
 let versionJson = getVersionInfo |> JsonValue.Parse
 
+// for MyGet
+logfn "##myget[buildNumber '%s']" (versionJson?NuGetVersion.AsString())
+
 
 // Targets
 Target "Clean" (fun _ ->
