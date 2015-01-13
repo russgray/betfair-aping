@@ -26,7 +26,7 @@ let packagingDir = packagingRoot @@ "betfair-aping"
 
 
 // Properties
-let gitVersion = environVarOrDefault "GitVersion" (buildPackagesDir + "/GitVersion.CommandLine/Tools/GitVersion.exe")
+let gitVersion = buildPackagesDir @@ "GitVersion.CommandLine/Tools/GitVersion.exe"
 let buildMode = getBuildParamOrDefault "buildMode" "Debug"
 
 
