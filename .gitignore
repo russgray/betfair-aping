@@ -183,5 +183,5 @@ $RECYCLE.BIN/
 
 *.nupkg
 build/
-packages/
+buildpackages/
 packaging/

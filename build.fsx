@@ -1,6 +1,6 @@
 // include Fake lib
-#r "src/packages/FAKE/tools/FakeLib.dll"
-#r "src/packages/FSharp.Data/lib/net40/FSharp.Data.dll"
+#r "buildpackages/FAKE/tools/FakeLib.dll"
+#r "buildpackages/FSharp.Data/lib/net40/FSharp.Data.dll"
 
 open System
 open Fake
@@ -17,16 +17,17 @@ let projectSummary = projectDescription // TODO: write a summary
 let copyright = "Copyright 2015 Russell Gray <russgray@gmail.com>"
 
 
-// Properties
-let gitVersion = environVarOrDefault "GitVersion" "GitVersion"
-let buildMode = getBuildParamOrDefault "buildMode" "Debug"
-
-
 // Directories
 let buildDir = "./build"
 let packagingRoot = "./packaging"
+let buildPackagesDir = "./buildpackages"
 let sourcePackagesDir = "./src/packages"
 let packagingDir = packagingRoot @@ "betfair-aping"
+
+
+// Properties
+let gitVersion = environVarOrDefault "GitVersion" (buildPackagesDir + "/GitVersion.CommandLine/Tools/GitVersion.exe")
+let buildMode = getBuildParamOrDefault "buildMode" "Debug"
 
 
 let getVersionInfo =
@@ -104,7 +105,7 @@ Target "CreatePackage" (fun _ ->
             OutputPath = packagingRoot
             Summary = projectSummary
             Tags = "betfair, tagwager"
-            Dependencies = [ 
+            Dependencies = [
                 ("RestSharp", GetPackageVersion "./src/packages" "RestSharp")
                 ("Newtonsoft.Json", GetPackageVersion "./src/packages" "Newtonsoft.Json")
             ]
@@ -123,9 +124,7 @@ Target "CreatePackage" (fun _ ->
             "./src/BetfairAPING/BetfairAPING.nuspectemplate"
 )
 
-Target "Default" (fun _ ->
-    trace "Hello World from FAKE"
-)
+Target "Default" <| DoNothing
 
 // Dependencies
 "Clean"
