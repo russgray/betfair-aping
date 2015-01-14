@@ -19,7 +19,7 @@ namespace BetfairAPING.Console.Options
         [Option('v', "verbose", HelpText = "Print detailed information")]
         public bool Verbosity { get; set; }
 
-        [Option("locale")]
+        [Option("locale", HelpText = "The language to be used where applicable. If not specified, the customer account default is returned")]
         public string Locale { get; set; }
     }
 }

@@ -20,14 +20,15 @@ namespace BetfairAPING.Console
             var options = new Options.Options();
             string invokedVerb = null;
             object invokedVerbInstance = null;
-            if (!Parser.Default.ParseArguments(
+            var valid = Parser.Default.ParseArguments(
                 args, options,
                 (verb, subOptions) =>
                 {
                     invokedVerb = verb;
                     invokedVerbInstance = subOptions;
-                }))
-            Environment.Exit(Parser.DefaultExitCodeFail);
+                });
+            if (!valid)
+                Environment.Exit(Parser.DefaultExitCodeFail);
 
             try
             {

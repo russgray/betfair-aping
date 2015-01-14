@@ -5,16 +5,16 @@ namespace BetfairAPING.Console.Options
 {
     class Options
     {
-        [VerbOption("getaccountdetails")]
+        [VerbOption("getaccountdetails", HelpText = "Returns the details relating your account, including your discount rate and Betfair point balance")]
         public AccountDetailsSubOptions GetAccountDetailsVerb { get; set; }
 
-        [VerbOption("getaccountfunds")]
+        [VerbOption("getaccountfunds", HelpText = "Get available to bet amount")]
         public AccountFundsSubOptions GetAccountFundsVerb { get; set; }
 
-        [VerbOption("getaccountstatement")]
+        [VerbOption("getaccountstatement", HelpText = "Get account statement")]
         public AccountStatementSubOptions GetAccountStatementVerb { get; set; }
 
-        [VerbOption("listcurrencyrates")]
+        [VerbOption("listcurrencyrates", HelpText = "Returns a list of currency rates based on given currency")]
         public ListCurrencyRatesSubOptions ListCurrencyRatesVerb { get; set; }
 
         [VerbOption("listcompetitions")]
