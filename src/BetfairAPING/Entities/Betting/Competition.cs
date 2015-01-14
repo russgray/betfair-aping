@@ -1,8 +1,6 @@
-﻿using System.Diagnostics;
-
-namespace BetfairAPING.Entities.Betting
+﻿namespace BetfairAPING.Entities.Betting
 {
-    [DebuggerDisplay("Id = {Id}, Name = {Name}")]
+    [ToString]
     public class Competition
     {
         public string Id { get; set; }

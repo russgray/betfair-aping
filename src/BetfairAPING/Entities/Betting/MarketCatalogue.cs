@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using RestSharp.Serializers;
 
 namespace BetfairAPING.Entities.Betting
 {
+    [ToString]
     public class MarketCatalogue
     {
         public string MarketId { get; set; }
@@ -15,11 +15,5 @@ namespace BetfairAPING.Entities.Betting
         public EventType EventType { get; set; }
         public Competition Competition { get; set; }
         public Event Event { get; set; }
-
-        public override string ToString()
-        {
-            var s = new JsonSerializer();
-            return s.Serialize(this);
-        }
     }
 }

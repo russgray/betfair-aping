@@ -2,6 +2,7 @@
 
 namespace BetfairAPING.Entities.Betting
 {
+    [ToString]
     public class ClearedOrderSummary
     {
         public string EventTypeId { get; set; }

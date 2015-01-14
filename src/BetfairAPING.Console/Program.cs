@@ -7,11 +7,14 @@ using BetfairAPING.Console.Options;
 using BetfairAPING.Entities.Betting;
 using CommandLine;
 using CredentialManagement;
+using NLog;
 
 namespace BetfairAPING.Console
 {
     class Program
     {
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         static void Main(string[] args)
         {
             var options = new Options.Options();
@@ -33,7 +36,7 @@ namespace BetfairAPING.Console
             catch (AggregateException ex)
             {
                 foreach (var e in ex.InnerExceptions)
-                    System.Console.WriteLine(e);
+                    _logger.Error(e);
             }
 
             if (Debugger.IsAttached)
@@ -181,9 +184,9 @@ namespace BetfairAPING.Console
                 var rs = result as IEnumerable;
                 if (rs != null)
                     foreach (var r in rs)
-                        System.Console.WriteLine(r);
+                        _logger.Info(r);
                 else
-                    System.Console.WriteLine(result);
+                    _logger.Info(result);
             }
         }
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 namespace BetfairAPING.Entities.Betting
 {
+    [ToString]
     public class StartingPrices
     {
         public double NearPrice { get; set; }

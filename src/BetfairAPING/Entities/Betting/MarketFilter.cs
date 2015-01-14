@@ -2,6 +2,7 @@
 
 namespace BetfairAPING.Entities.Betting
 {
+    [ToString]
     public class MarketFilter
     {
         public string TextQuery { get; set; }

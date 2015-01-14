@@ -2,6 +2,7 @@ using System;
 
 namespace BetfairAPING.Entities.Betting
 {
+    [ToString]
     public class ItemDescription
     {
         public string EventTypeDesc { get; set; }

@@ -2,6 +2,7 @@
 
 namespace BetfairAPING.Entities.Accounts
 {
+    [ToString]
     public class StatementLegacyData
     {
         public double? AvgPrice { get; set; }

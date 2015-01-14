@@ -1,5 +1,7 @@
 using System.Net;
 using System.Threading.Tasks;
+using Anotar.LibLog;
+using BetfairAPING.Exceptions;
 using RestSharp;
 using RestSharp.Deserializers;
 
@@ -22,6 +24,9 @@ namespace BetfairAPING
             _resourceRoot = string.Format("exchange/{0}/rest/v1.0", apiType);
             _client = new RestClient(string.Format("https://{0}.betfair.com", _subdomain));
             _serializer = new CamelCaseJsonSerializer();
+
+            LogTo.Trace("Initialised API client: AppKey={0}, Subdomain={1}, Resource={2}, Host={3}", 
+                _appKey, _subdomain, _resourceRoot, _client.BaseUrl);
         }
 
         protected async Task<T> SendRequest<T>(string operation, dynamic payload = null, string sessionToken = null) where T: new()
@@ -39,8 +44,9 @@ namespace BetfairAPING
             if (resp.StatusCode != HttpStatusCode.OK)
             {
                 // Attempt deserialisation again, this time as an error object
+                // TODO: This should be in subclasses as betting API deserialises differently to accounts API
                 var js = new JsonDeserializer();
-                var error = js.Deserialize<BetfairApiException.ApiError>(resp);
+                var error = js.Deserialize<ApiError>(resp);
                 throw new BetfairApiException(error);
             }
 

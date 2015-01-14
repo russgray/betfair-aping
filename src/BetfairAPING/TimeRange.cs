@@ -2,6 +2,7 @@
 
 namespace BetfairAPING
 {
+    [ToString]
     public class TimeRange
     {
         public DateTime? From { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace BetfairAPING.Entities.Accounts
 {
+    [ToString]
     public class AccountStatementItem
     {
         public string RefId { get; set; }

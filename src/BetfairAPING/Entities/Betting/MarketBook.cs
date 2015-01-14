@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using RestSharp.Serializers;
 
 namespace BetfairAPING.Entities.Betting
 {
+    [ToString]
     public class MarketBook
     {
         public string MarketId { get; set; }
@@ -23,11 +23,5 @@ namespace BetfairAPING.Entities.Betting
         public bool RunnersVoidable { get; set; }
         public long Version { get; set; }
         public List<Runner> Runners { get; set; }
-
-        public override string ToString()
-        {
-            var s = new JsonSerializer();
-            return s.Serialize(this);
-        }
     }
 }

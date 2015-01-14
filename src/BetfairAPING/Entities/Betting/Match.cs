@@ -2,6 +2,7 @@ using System;
 
 namespace BetfairAPING.Entities.Betting
 {
+    [ToString]
     public class Match
     {
         public string BetId { get; set; }
