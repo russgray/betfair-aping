@@ -8,7 +8,7 @@ namespace BetfairAPING.Entities.Betting
         public string EventTypeId { get; set; }
         public string EventId { get; set; }
         public string MarketId { get; set; }
-        public string SelectionId { get; set; }
+        public long SelectionId { get; set; }
         public double Handicap { get; set; }
         public string BetId { get; set; }
         public DateTime PlacedDate { get; set; }

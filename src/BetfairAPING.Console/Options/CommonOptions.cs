@@ -2,7 +2,7 @@
 
 namespace BetfairAPING.Console.Options
 {
-    abstract class CommonOptions
+    public class CommonOptions
     {
         [Option('u', "username", MutuallyExclusiveSet = "interactive login", HelpText = "Betfair username")]
         public string Username { get; set; }

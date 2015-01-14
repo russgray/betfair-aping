@@ -69,7 +69,18 @@ namespace BetfairAPING.Console
             object result = null;
             switch (verb)
             {
-                    #region Accounts API
+                case "selftest":
+                    // Run through a variety of readonly requests
+                    PrintResult(await accountsApi.GetAccountDetailsAsync());
+                    PrintResult(await accountsApi.GetAccountFundsAsync());
+                    PrintResult(await accountsApi.GetAccountStatementAsync(itemDateRange: TimeRange.Since(TimeSpan.FromDays(30))));
+                    PrintResult(await accountsApi.ListCurrencyRatesAsync());
+                    PrintResult(await bettingApi.ListCompetitionsAsync(new {filter = new MarketFilter {TextQuery = "Boxing"}}));
+                    PrintResult(await bettingApi.ListCountriesAsync(new {filter = new MarketFilter {TextQuery = "Boxing"}}));
+                    PrintResult(await bettingApi.ListEventsAsync(new {filter = new MarketFilter {TextQuery = "Boxing"}}));
+                    return;
+
+                #region Accounts API
 
                 case "getaccountdetails":
                     result = await accountsApi.GetAccountDetailsAsync();
@@ -80,19 +91,14 @@ namespace BetfairAPING.Console
                 case "getaccountstatement":
                 {
                     var cmdSubOptions = (AccountStatementSubOptions) subOptions;
-                    result = await accountsApi.GetAccountStatementAsync(
-                        new
-                        {
-                            recordCount = cmdSubOptions.RecordCount,
-                            itemDateRange = TimeRange.Since(TimeSpan.FromDays(cmdSubOptions.FromDays))
-                        });
+                    result = await accountsApi.GetAccountStatementAsync(recordCount: cmdSubOptions.RecordCount, itemDateRange: TimeRange.Since(TimeSpan.FromDays(cmdSubOptions.FromDays)));
                     break;
                 }
                 case "listcurrencyrates":
                     result = await accountsApi.ListCurrencyRatesAsync();
                     break;
 
-                    #endregion
+                #endregion
 
                 case "listcompetitions":
                     result = await bettingApi.ListCompetitionsAsync(
@@ -138,7 +144,7 @@ namespace BetfairAPING.Console
                     result = await bettingApi.ListEventsAsync(
                         new
                         {
-                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
+                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions)subOptions),
                         });
                     break;
                 case "listeventtypes":
@@ -163,7 +169,7 @@ namespace BetfairAPING.Console
                 }
                 case "listmarketcatalogue":
                 {
-                    var cmdSubOptions = (ListMarketCatalogueSubOptions) subOptions;
+                    var cmdSubOptions = (ListMarketCatalogueSubOptions)subOptions;
                     result = await bettingApi.ListMarketCatalogueAsync(
                         new
                         {
@@ -174,11 +180,26 @@ namespace BetfairAPING.Console
                         });
                     break;
                 }
+                case "listmarketprofitandloss":
+                {
+                    var cmdSubOptions = (ListMarketProfitAndLossSubOptions)subOptions;
+                    result = await bettingApi.ListMarketProfitAndLossAsync(
+                        new
+                        {
+                            marketIds = cmdSubOptions.MarketIdsAsSet,
+                        });
+                    break;
+                }
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);
                     break;
             }
 
+            PrintResult(result);
+        }
+
+        private static void PrintResult(object result)
+        {
             if (result != null)
             {
                 var rs = result as IEnumerable;

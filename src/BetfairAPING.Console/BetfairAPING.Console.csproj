@@ -60,6 +60,7 @@
     <Compile Include="Options\ListCurrentOrdersSubOptions.cs" />
     <Compile Include="Options\ListMarketBookSubOptions.cs" />
     <Compile Include="Options\ListMarketCatalogueSubOptions.cs" />
+    <Compile Include="Options\ListMarketProfitAndLossSubOptions.cs" />
     <Compile Include="Options\MarketFilterSubOptions.cs" />
     <Compile Include="Options\Options.cs" />
     <Compile Include="Program.cs" />

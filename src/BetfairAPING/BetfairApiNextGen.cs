@@ -29,9 +29,11 @@ namespace BetfairAPING
                 _appKey, _subdomain, _resourceRoot, _client.BaseUrl);
         }
 
-        protected async Task<T> SendRequest<T>(string operation, dynamic payload = null, string sessionToken = null) where T: new()
+        protected async Task<TReq> SendRequest<TReq, TError>(string operation, dynamic payload = null, string sessionToken = null) 
+            where TReq : new() 
+            where TError : ApiError
         {
-            var req =  new RestRequest(string.Format("{0}/{1}/", _resourceRoot, operation), Method.POST)
+            var req = new RestRequest(string.Format("{0}/{1}/", _resourceRoot, operation), Method.POST)
             {
                 JsonSerializer = _serializer
             };
@@ -39,14 +41,13 @@ namespace BetfairAPING
             if (payload != null)
                 req.AddJsonBody(payload);
 
-            var resp = await _client.ExecutePostTaskAsync<T>(req);
-
+            var resp = await _client.ExecutePostTaskAsync<TReq>(req);
             if (resp.StatusCode != HttpStatusCode.OK)
             {
                 // Attempt deserialisation again, this time as an error object
-                // TODO: This should be in subclasses as betting API deserialises differently to accounts API
+                LogTo.Debug("Deserialization error for content {0}", resp.Content);
                 var js = new JsonDeserializer();
-                var error = js.Deserialize<ApiError>(resp);
+                var error = js.Deserialize<TError>(resp);
                 throw new BetfairApiException(error);
             }
 

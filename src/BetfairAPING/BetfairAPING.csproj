@@ -91,13 +91,15 @@
     <Compile Include="Entities\Betting\MarketFilter.cs" />
     <Compile Include="Entities\Accounts\StatementLegacyData.cs" />
     <Compile Include="Entities\Accounts\TransferResponse.cs" />
+    <Compile Include="Entities\Betting\MarketProfitAndLoss.cs" />
     <Compile Include="Entities\Betting\Match.cs" />
     <Compile Include="Entities\Betting\Order.cs" />
     <Compile Include="Entities\Betting\PriceSize.cs" />
     <Compile Include="Entities\Betting\Runner.cs" />
     <Compile Include="Entities\Betting\RunnerCatalogue.cs" />
+    <Compile Include="Entities\Betting\RunnerProfitAndLoss.cs" />
     <Compile Include="Entities\Betting\StartingPrices.cs" />
-    <Compile Include="Exceptions\AccountApiExceptionDetails.cs" />
+    <Compile Include="Exceptions\APINGException.cs" />
     <Compile Include="Exceptions\ApiError.cs" />
     <Compile Include="Exceptions\BetfairApiException.cs" />
     <Compile Include="Exceptions\Detail.cs" />

@@ -15,5 +15,10 @@ namespace BetfairAPING.Exceptions
         {
             Error = error;
         }
+
+        public override string ToString()
+        {
+            return string.Format("Ex: Error={0}, Message={1}", Error, Message);
+        }
     }
 }

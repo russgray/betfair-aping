@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using BetfairAPING.Entities.Betting;
+using BetfairAPING.Exceptions;
 
 namespace BetfairAPING
 {
@@ -10,6 +12,11 @@ namespace BetfairAPING
             : base(appKey, subdomain ?? "api", "betting", sessionToken)
         {
             
+        }
+
+        private async Task<T> SendRequest<T>(string operation, object payload = null, string sessionToken = null) where T : new()
+        {
+            return await SendRequest<T, BettingApiError>(operation, payload, sessionToken);
         }
 
         public async Task<List<CompetitionResult>> ListCompetitionsAsync(dynamic payload = null)
@@ -50,6 +57,11 @@ namespace BetfairAPING
         public async Task<List<MarketCatalogue>> ListMarketCatalogueAsync(dynamic payload = null)
         {
             return await SendRequest<List<MarketCatalogue>>("listMarketCatalogue", payload: payload);
+        }
+
+        public async Task<List<MarketProfitAndLoss>> ListMarketProfitAndLossAsync(dynamic payload = null)
+        {
+            return await SendRequest<List<MarketProfitAndLoss>>("listMarketProfitAndLoss", payload: payload);
         }
     }
 }

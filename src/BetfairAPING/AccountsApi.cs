@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BetfairAPING.Entities;
 using BetfairAPING.Entities.Accounts;
+using BetfairAPING.Exceptions;
 
 namespace BetfairAPING
 {
@@ -11,6 +11,11 @@ namespace BetfairAPING
             : base(appKey, subdomain ?? "api", "account", sessionToken)
         {
             
+        }
+
+        private async Task<T> SendRequest<T>(string operation, object payload = null, string sessionToken = null) where T : new()
+        {
+            return await SendRequest<T, AccountsApiError>(operation, payload, sessionToken);
         }
 
         public async Task<AccountDetails> GetAccountDetailsAsync()
@@ -23,7 +28,21 @@ namespace BetfairAPING
             return await SendRequest<AccountFunds>("getAccountFunds");
         }
 
-        public async Task<AccountStatementReport> GetAccountStatementAsync(dynamic payload = null)
+        public async Task<AccountStatementReport> GetAccountStatementAsync(string locale = null, int? fromRecord = null, int? recordCount = null, TimeRange itemDateRange = null, string includeItem = null, string wallet = null)
+        {
+            return await GetAccountStatementAsync(
+                new
+                {
+                    locale,
+                    fromRecord,
+                    recordCount, 
+                    itemDateRange,
+                    includeItem,
+                    wallet
+                });
+        }
+
+        protected async Task<AccountStatementReport> GetAccountStatementAsync(dynamic payload = null)
         {
             /*
              * Sample request:
