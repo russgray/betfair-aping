@@ -107,7 +107,7 @@ Target "CreatePackage" (fun _ ->
             Description = projectDescription
             OutputPath = packagingRoot
             Summary = projectSummary
-            Tags = "betfair, tagwager"
+            Tags = "betfair tagwager"
             Dependencies = [
                             ("RestSharp", GetPackageVersion "./src/packages" "RestSharp")
                             ("Newtonsoft.Json", GetPackageVersion "./src/packages" "Newtonsoft.Json")

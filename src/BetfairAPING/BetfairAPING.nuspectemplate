@@ -12,7 +12,7 @@
     <description>@description@</description>
     <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>Copyright Russell Gray 2015</copyright>
-    <tags>Betfair APING Tagwager</tags>
+    <tags>@tags@</tags>
     @dependencies@
   </metadata>
   @files@
