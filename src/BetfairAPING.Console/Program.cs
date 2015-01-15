@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using BetfairAPING.Console.Options;
 using BetfairAPING.Entities.Betting;
@@ -40,6 +41,7 @@ namespace BetfairAPING.Console
                     _logger.Error(e);
             }
 
+            System.Console.Write(MethodTimeLogger.HumanReport());
             if (Debugger.IsAttached)
             {
                 System.Console.WriteLine("Press any key...");

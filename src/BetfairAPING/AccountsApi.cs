@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BetfairAPING.Entities.Accounts;
 using BetfairAPING.Exceptions;
+using MethodTimer;
 
 namespace BetfairAPING
 {
@@ -18,16 +19,19 @@ namespace BetfairAPING
             return await SendRequest<T, AccountsApiError>(operation, payload, sessionToken);
         }
 
+        [Time]
         public async Task<AccountDetails> GetAccountDetailsAsync()
         {
             return await SendRequest<AccountDetails>("getAccountDetails");
         }
 
+        [Time]
         public async Task<AccountFunds> GetAccountFundsAsync()
         {
             return await SendRequest<AccountFunds>("getAccountFunds");
         }
 
+        [Time]
         public async Task<AccountStatementReport> GetAccountStatementAsync(string locale = null, int? fromRecord = null, int? recordCount = null, TimeRange itemDateRange = null, string includeItem = null, string wallet = null)
         {
             return await GetAccountStatementAsync(
@@ -62,11 +66,13 @@ namespace BetfairAPING
             return await SendRequest<AccountStatementReport>("getAccountStatement", payload: payload);
         }
 
+        [Time]
         public async Task<List<CurrencyRate>> ListCurrencyRatesAsync(dynamic payload = null)
         {
             return await SendRequest<List<CurrencyRate>>("listCurrencyRates", payload: payload);
         }
 
+        [Time]
         public async Task<TransferResponse> TransferFundsAsync(dynamic payload = null)
         {
             return await SendRequest<TransferResponse>("transferFunds", payload: payload);

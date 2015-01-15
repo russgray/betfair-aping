@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using BetfairAPING.Entities;
 using BetfairAPING.Entities.Accounts;
+using MethodTimer;
 using RestSharp;
 
 namespace BetfairAPING
@@ -10,6 +10,7 @@ namespace BetfairAPING
     {
         private static readonly RestClient _client = new RestClient("https://identitysso.betfair.com/api/certlogin");
 
+        [Time]
         public static async Task<AuthenticationResponse> Authenticate(string username, string password, string pathToCert)
         {
             var req = new RestRequest(Method.POST);
