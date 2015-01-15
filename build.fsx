@@ -72,6 +72,7 @@ Target "GenerateAssemblyInfo" (fun _ ->
          Attribute.Guid "2a120bd3-a369-47ed-a67d-26823d332807"
          Attribute.Product projectName
          Attribute.Copyright copyright
+         //Attribute ("LogMinimalMessage", "", "Anotar.LibLog")
          Attribute.Version (versionJson?ClassicVersion.AsString())
          Attribute.FileVersion (versionJson?ClassicVersion.AsString())
          Attribute.InformationalVersion (versionJson?InformationalVersion.AsString())]
@@ -111,6 +112,7 @@ Target "CreatePackage" (fun _ ->
             Dependencies = [
                             ("RestSharp", GetPackageVersion "./src/packages" "RestSharp")
                             ("Newtonsoft.Json", GetPackageVersion "./src/packages" "Newtonsoft.Json")
+                            ("Metrics", GetPackageVersion "./src/packages" "Metrics")
             ]
             Files = [
                     (@"LICENSE", None, None)
