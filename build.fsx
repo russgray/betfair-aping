@@ -93,6 +93,14 @@ Target "BuildApp" (fun _ ->
       |> Log "AppBuild-Output: "
 )
 
+Target "Test" (fun _ ->
+    !! (buildDir @@ "*.Tests.dll")
+      |> MSpec (fun p ->
+          {p with
+             HtmlOutputDir = buildDir })
+)
+
+
 Target "CreatePackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
     CleanDirs [net45Dir]
@@ -113,6 +121,7 @@ Target "CreatePackage" (fun _ ->
                             ("RestSharp", GetPackageVersion "./src/packages" "RestSharp")
                             ("Newtonsoft.Json", GetPackageVersion "./src/packages" "Newtonsoft.Json")
                             ("Metrics", GetPackageVersion "./src/packages" "Metrics")
+                            ("CredentialManagement", GetPackageVersion "./src/packages" "CredentialManagement")
             ]
             Files = [
                     (@"LICENSE", None, None)
@@ -136,6 +145,7 @@ Target "Default" <| DoNothing
   ==> "RestoreSrcPackages"
   ==> "GenerateAssemblyInfo"
   ==> "BuildApp"
+  ==> "Test"
   ==> "CreatePackage"
   ==> "Default"
 

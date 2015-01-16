@@ -38,6 +38,9 @@
       <HintPath>..\packages\Anotar.LibLog.Fody.2.13.1\Lib\Anotar.LibLog.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CredentialManagement">
+      <HintPath>..\packages\CredentialManagement.1.0.2\lib\net35\CredentialManagement.dll</HintPath>
+    </Reference>
     <Reference Include="MethodTimer">
       <HintPath>..\packages\MethodTimer.Fody.1.15.2.0\Lib\portable-net4+sl5+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\MethodTimer.dll</HintPath>
       <Private>False</Private>

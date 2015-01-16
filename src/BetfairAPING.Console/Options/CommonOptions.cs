@@ -7,10 +7,10 @@ namespace BetfairAPING.Console.Options
         [Option('u', "username", MutuallyExclusiveSet = "interactive login", HelpText = "Betfair username")]
         public string Username { get; set; }
 
-        [Option("cert-file", Required = true, HelpText = "Path to Betfair API certificate")]
+        [Option("cert-file", HelpText = "Path to Betfair API certificate")]
         public string CertPath { get; set; }
 
-        [Option("app-key", Required = true, HelpText = "Betfair app key")]
+        [Option("app-key", HelpText = "Betfair app key")]
         public string AppKey { get; set; }
 
         [Option('c', "credential-store-name", MutuallyExclusiveSet = "credential login")]

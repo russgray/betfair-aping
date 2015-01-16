@@ -13,4 +13,8 @@ if not exist buildpackages\GitVersion.CommandLine\Tools\GitVersion.exe (
     ".nuget\NuGet.exe" "Install" "GitVersion.CommandLine" "-OutputDirectory" "buildpackages" "-ExcludeVersion"
 )
 
+if not exist buildpackages\Machine.Specifications.Runner.Console\tools\mspec-clr4.exe (
+    ".nuget\NuGet.exe" "Install" "Machine.Specifications.Runner.Console" "-OutputDirectory" "buildpackages" "-ExcludeVersion"
+)
+
 "buildpackages\FAKE\tools\Fake.exe" build.fsx
