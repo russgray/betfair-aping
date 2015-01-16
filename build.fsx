@@ -23,6 +23,7 @@ let packagingRoot = "./packaging"
 let buildPackagesDir = "./buildpackages"
 let sourcePackagesDir = "./src/packages"
 let packagingDir = packagingRoot @@ "betfair-aping"
+let consolePackagingDir = packagingRoot @@ "betfair-aping.console"
 
 
 // Properties
@@ -129,11 +130,34 @@ Target "CreatePackage" (fun _ ->
             ]
             WorkingDir = packagingDir
             Version = (versionJson?NuGetVersion.AsString())
-            SymbolPackage = NugetSymbolPackage.Nuspec
-            AccessKey = getBuildParamOrDefault "nugetkey" ""
-            Publish = hasBuildParam "nugetkey" })
-            "./src/BetfairAPING/BetfairAPING.nuspectemplate"
+            SymbolPackage = NugetSymbolPackage.Nuspec })
+            "./NuGetAssets/BetfairAPING.nuspectemplate"
 )
+
+Target "CreateConsolePackage" (fun _ ->
+    let toolsDir = consolePackagingDir @@ "Tools"
+    CleanDirs [toolsDir]
+
+    CopyFile (toolsDir @@ "betfairapi.exe") (buildDir @@ "BetfairAPING.Console.exe")
+    CopyFile (toolsDir @@ "chocolateyInstall.ps1") ("./NuGetAssets/BetfairAPING.Console.chocolateyInstall.ps1")
+    CopyFile (toolsDir @@ "chocolateyUninstall.ps1") ("./NuGetAssets/BetfairAPING.Console.chocolateyUninstall.ps1")
+    CopyFile toolsDir (buildDir @@ "NLog.config")
+
+    NuGet (fun p ->
+        {p with
+            Authors = authors
+            Project = "BetfairAPING.Console"
+            Description = projectDescription
+            OutputPath = packagingRoot
+            Summary = projectSummary
+            Tags = "betfair tagwager"
+            WorkingDir = consolePackagingDir
+            Version = (versionJson?NuGetVersion.AsString())
+            NoPackageAnalysis = true
+            SymbolPackage = NugetSymbolPackage.None })
+            "./NuGetAssets/BetfairAPING.Console.nuspectemplate"
+)
+
 
 Target "Default" <| DoNothing
 
@@ -144,6 +168,7 @@ Target "Default" <| DoNothing
   ==> "BuildApp"
   ==> "Test"
   ==> "CreatePackage"
+  ==> "CreateConsolePackage"
   ==> "Default"
 
 // start build
