@@ -1,4 +1,5 @@
-﻿using Machine.Fakes;
+﻿using BetfairAPING.Authentication;
+using Machine.Fakes;
 using Machine.Specifications;
 
 namespace BetfairAPING.Tests

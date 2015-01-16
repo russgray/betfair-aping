@@ -71,6 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Packages\LibLog.2.0\LibLog.cs" />
+    <Compile Include="Authentication\DefaultCredentialStore.cs" />
+    <Compile Include="Authentication\FileAuthConfigProvider.cs" />
+    <Compile Include="Authentication\IAuthConfigProvider.cs" />
+    <Compile Include="Authentication\ICredentialStore.cs" />
+    <Compile Include="Authentication\LoginCredentials.cs" />
+    <Compile Include="Authentication\UserPass.cs" />
     <Compile Include="BettingApi.cs" />
     <Compile Include="Entities\Betting\ClearedOrderSummary.cs" />
     <Compile Include="Entities\Betting\ClearedOrderSummaryReport.cs" />

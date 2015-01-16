@@ -1,3 +1,4 @@
+using BetfairAPING.Authentication;
 using Machine.Fakes;
 using Machine.Specifications;
 

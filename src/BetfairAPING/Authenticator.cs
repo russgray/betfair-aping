@@ -1,13 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using BetfairAPING.Authentication;
 using BetfairAPING.Entities.Accounts;
-using CredentialManagement;
 using MethodTimer;
-using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Deserializers;
 
 namespace BetfairAPING
 {
@@ -127,75 +123,5 @@ namespace BetfairAPING
             // Uh-oh
             return null;
         }
-    }
-
-    public class LoginCredentials
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string CertPath { get; set; }
-        public string AppKey { get; set; }
-
-        public void Validate()
-        {
-            if (string.IsNullOrEmpty(Username))
-                throw new NullReferenceException("Username");
-            if (string.IsNullOrEmpty(Password))
-                throw new NullReferenceException("Password");
-            if (string.IsNullOrEmpty(CertPath))
-                throw new NullReferenceException("CertPath");
-            if (string.IsNullOrEmpty(AppKey))
-                throw new NullReferenceException("AppKey");
-        }
-    }
-
-    public interface IAuthConfigProvider
-    {
-        LoginCredentials ReadConfig();
-    }
-
-    internal class FileAuthConfigProvider : IAuthConfigProvider
-    {
-        public LoginCredentials ReadConfig()
-        {
-            var homeConfig = Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "bf.json");
-
-            LoginCredentials json = null;
-            // Look for config file in current dir first
-            if (File.Exists("bf.json"))
-                json = JsonConvert.DeserializeObject<LoginCredentials>(File.ReadAllText("bf.json"));
-            else if (File.Exists(homeConfig))
-                json = JsonConvert.DeserializeObject<LoginCredentials>(File.ReadAllText(homeConfig));
-
-            return json;
-        }
-    }
-
-    public interface ICredentialStore
-    {
-        UserPass GetCredentials(string credentialStoreName);
-    }
-
-    internal class DefaultCredentialStore : ICredentialStore
-    {
-        public UserPass GetCredentials(string credentialStoreName)
-        {
-            var cm = new Credential { Target = credentialStoreName };
-            if (!cm.Exists())
-                return null;
-
-            cm.Load();
-            return new UserPass
-                   {
-                       Username = cm.Username,
-                       Password = cm.Password
-                   };
-        }
-    }
-
-    public class UserPass
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
     }
 }
