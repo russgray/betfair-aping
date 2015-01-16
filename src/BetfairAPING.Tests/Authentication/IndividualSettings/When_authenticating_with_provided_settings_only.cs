@@ -2,7 +2,7 @@
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace BetfairAPING.Tests
+namespace BetfairAPING.Tests.Authentication.IndividualSettings
 {
     // ReSharper disable InconsistentNaming
     [Subject(typeof(Authenticator))]
@@ -13,6 +13,7 @@ namespace BetfairAPING.Tests
         It should_use_provided_username = () => Response.Username.ShouldEqual("username");
         It should_find_no_password = () => Response.Password.ShouldBeNull();
         It should_use_provided_certpath = () => Response.CertPath.ShouldEqual("certpath");
+        It should_find_no_appkey = () => Response.AppKey.ShouldBeNull();
 
         static LoginCredentials Response;
     }
