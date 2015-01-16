@@ -95,11 +95,8 @@ Target "BuildApp" (fun _ ->
 
 Target "Test" (fun _ ->
     !! (buildDir @@ "*.Tests.dll")
-      |> MSpec (fun p ->
-          {p with
-             HtmlOutputDir = buildDir })
+      |> MSpec (fun p -> p)
 )
-
 
 Target "CreatePackage" (fun _ ->
     let net45Dir = packagingDir @@ "lib/net45/"
