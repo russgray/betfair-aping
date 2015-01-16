@@ -8,7 +8,7 @@ namespace BetfairAPING.Authentication
     {
         public LoginCredentials ReadConfig()
         {
-            var homeConfig = Path.Combine(Environment.ExpandEnvironmentVariables("%HOME%"), "bf.json");
+            var homeConfig = Path.Combine(Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%"), "bf.json");
 
             LoginCredentials json = null;
             // Look for config file in current dir first

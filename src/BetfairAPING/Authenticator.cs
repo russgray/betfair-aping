@@ -48,12 +48,16 @@ namespace BetfairAPING
             string certPath = null,
             string appKey = null)
         {
+            var json = _authConfigProvider.ReadConfig();
+
+            // Use credential store from config if necessary
+            if (credentialStore == null && json != null)
+                credentialStore = json.CredentialStore;
+
             // Load credentials from store if provided
             UserPass credential = null;
             if (!string.IsNullOrEmpty(credentialStore))
                 credential = _store.GetCredentials(credentialStore);
-
-            var json = _authConfigProvider.ReadConfig();
 
             return new LoginCredentials
                    {

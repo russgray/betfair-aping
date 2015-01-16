@@ -8,6 +8,7 @@ namespace BetfairAPING.Authentication
         public string Password { get; set; }
         public string CertPath { get; set; }
         public string AppKey { get; set; }
+        public string CredentialStore { get; set; }
 
         public void Validate()
         {
