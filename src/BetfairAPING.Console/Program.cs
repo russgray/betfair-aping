@@ -145,6 +145,11 @@ namespace BetfairAPING.Console
                             marketIds = cmdSubOptions.MarketIdsAsSet,
                             runnerIds = cmdSubOptions.RunnerIdsAsSet,
                             betIds = cmdSubOptions.BetIdsAsSet,
+                            side = cmdSubOptions.Side,
+                            groupBy = cmdSubOptions.GroupBy,
+                            includeItemDescription = cmdSubOptions.IncludeItemDescription,
+                            fromRecord = cmdSubOptions.FromRecord,
+                            recordCount = cmdSubOptions.RecordCount,
                         });
                     break;
                 }

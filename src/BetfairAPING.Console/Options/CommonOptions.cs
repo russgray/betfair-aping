@@ -14,7 +14,7 @@ namespace BetfairAPING.Console.Options
         [Option("app-key", HelpText = "Betfair app key")]
         public string AppKey { get; set; }
 
-        [Option('c', "credential-store-name", MutuallyExclusiveSet = "credential login")]
+        [Option('c', "credential-store-name", MutuallyExclusiveSet = "credential login", HelpText = "Name of credential entry in Credential Manager")]
         public string CredentialStoreName { get; set; }
 
         [Option('v', "verbose", HelpText = "Print detailed information")]
