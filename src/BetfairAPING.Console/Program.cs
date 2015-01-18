@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
 using BetfairAPING.Console.Options;
 using BetfairAPING.Entities.Betting;
 using CommandLine;
-using CredentialManagement;
+using Newtonsoft.Json;
 using NLog;
+using NLog.Fluent;
 
 namespace BetfairAPING.Console
 {
@@ -41,7 +40,9 @@ namespace BetfairAPING.Console
                     _logger.Error(e);
             }
 
-            System.Console.Write(MethodTimeLogger.HumanReport());
+            if (invokedVerbInstance is CommonOptions && ((CommonOptions)invokedVerbInstance).PerfReport)
+                System.Console.Write(MethodTimeLogger.HumanReport());
+
             if (Debugger.IsAttached)
             {
                 System.Console.WriteLine("Press any key...");
@@ -52,6 +53,8 @@ namespace BetfairAPING.Console
         static async Task Process(string verb, object subOptions)
         {
             var commonOptions = (CommonOptions)subOptions;
+            ReconfigureLoggers(commonOptions.Verbose ? LogLevel.Trace : LogLevel.Info);
+
             var authenticator = new Authenticator();
             var credentials = authenticator.ResolveCredentials(
                 commonOptions.Username,
@@ -71,13 +74,13 @@ namespace BetfairAPING.Console
             {
                 case "selftest":
                     // Run through a variety of readonly requests
-                    PrintResult(await accountsApi.GetAccountDetailsAsync());
-                    PrintResult(await accountsApi.GetAccountFundsAsync());
-                    PrintResult(await accountsApi.GetAccountStatementAsync(itemDateRange: TimeRange.Since(TimeSpan.FromDays(30))));
-                    PrintResult(await accountsApi.ListCurrencyRatesAsync());
-                    PrintResult(await bettingApi.ListCompetitionsAsync(new {filter = new MarketFilter {TextQuery = "Boxing"}}));
-                    PrintResult(await bettingApi.ListCountriesAsync(new {filter = new MarketFilter {TextQuery = "Boxing"}}));
-                    PrintResult(await bettingApi.ListEventsAsync(new {filter = new MarketFilter {TextQuery = "Boxing"}}));
+                    PrintResult(await accountsApi.GetAccountDetailsAsync(), commonOptions.JsonOutput);
+                    PrintResult(await accountsApi.GetAccountFundsAsync(), commonOptions.JsonOutput);
+                    PrintResult(await accountsApi.GetAccountStatementAsync(itemDateRange: TimeRange.Since(TimeSpan.FromDays(30))), commonOptions.JsonOutput);
+                    PrintResult(await accountsApi.ListCurrencyRatesAsync(), commonOptions.JsonOutput);
+                    PrintResult(await bettingApi.ListCompetitionsAsync(new { filter = new MarketFilter { TextQuery = "Boxing" } }), commonOptions.JsonOutput);
+                    PrintResult(await bettingApi.ListCountriesAsync(new { filter = new MarketFilter { TextQuery = "Boxing" } }), commonOptions.JsonOutput);
+                    PrintResult(await bettingApi.ListEventsAsync(new { filter = new MarketFilter { TextQuery = "Boxing" } }), commonOptions.JsonOutput);
                     return;
 
                 #region Accounts API
@@ -100,18 +103,20 @@ namespace BetfairAPING.Console
 
                 #endregion
 
+                #region Betting API
+
                 case "listcompetitions":
                     result = await bettingApi.ListCompetitionsAsync(
                         new
                         {
-                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
+                            filter = ((MarketFilterSubOptions) subOptions).ToMarketFilter()
                         });
                     break;
                 case "listcountries":
                     result = await bettingApi.ListCountriesAsync(
                         new
                         {
-                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
+                            filter = ((MarketFilterSubOptions)subOptions).ToMarketFilter()
                         });
                     break;
                 case "listcurrentorders":
@@ -122,6 +127,9 @@ namespace BetfairAPING.Console
                         {
                             betIds = cmdSubOptions.BetIdsAsSet,
                             marketIds = cmdSubOptions.MarketIdsAsSet,
+                            orderProjection = cmdSubOptions.OrderProjection,
+                            fromRecord = cmdSubOptions.FromRecord,
+                            recordCount = cmdSubOptions.RecordCount,
                         });
                     break;
                 }
@@ -137,6 +145,11 @@ namespace BetfairAPING.Console
                             marketIds = cmdSubOptions.MarketIdsAsSet,
                             runnerIds = cmdSubOptions.RunnerIdsAsSet,
                             betIds = cmdSubOptions.BetIdsAsSet,
+                            side = cmdSubOptions.Side,
+                            groupBy = cmdSubOptions.GroupBy,
+                            includeItemDescription = cmdSubOptions.IncludeItemDescription,
+                            fromRecord = cmdSubOptions.FromRecord,
+                            recordCount = cmdSubOptions.RecordCount,
                         });
                     break;
                 }
@@ -144,14 +157,14 @@ namespace BetfairAPING.Console
                     result = await bettingApi.ListEventsAsync(
                         new
                         {
-                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions)subOptions),
+                            filter = ((MarketFilterSubOptions)subOptions).ToMarketFilter()
                         });
                     break;
                 case "listeventtypes":
                     result = await bettingApi.ListEventTypesAsync(
                         new
                         {
-                            filter = CreateMarketFilterFromOptions((MarketFilterSubOptions) subOptions)
+                            filter = ((MarketFilterSubOptions)subOptions).ToMarketFilter()
                         });
                     break;
                 case "listmarketbook":
@@ -161,7 +174,7 @@ namespace BetfairAPING.Console
                         new
                         {
                             marketIds = cmdSubOptions.MarketIdsAsSet,
-                            priceProjection = cmdSubOptions.PriceProjection,
+                            //priceProjection = cmdSubOptions.PriceProjection,
                             orderProjection = cmdSubOptions.OrderProjection,
                             matchProjection = cmdSubOptions.MatchProjection,
                         });
@@ -173,7 +186,7 @@ namespace BetfairAPING.Console
                     result = await bettingApi.ListMarketCatalogueAsync(
                         new
                         {
-                            filter = CreateMarketFilterFromOptions(cmdSubOptions),
+                            filter = cmdSubOptions.ToMarketFilter(),
                             marketProjection = cmdSubOptions.MarketProjectionAsSet,
                             sort = cmdSubOptions.MarketSort,
                             maxResults = cmdSubOptions.MaxResults,
@@ -190,42 +203,46 @@ namespace BetfairAPING.Console
                         });
                     break;
                 }
+
+                #endregion
+
                 default:
                     System.Console.WriteLine("Can't handle {0} API call", verb);
                     break;
             }
 
-            PrintResult(result);
+            PrintResult(result, commonOptions.JsonOutput);
         }
 
-        private static void PrintResult(object result)
+        private static void PrintResult(object result, bool json)
         {
             if (result != null)
             {
                 var rs = result as IEnumerable;
                 if (rs != null)
+                {
                     foreach (var r in rs)
-                        _logger.Info(r);
+                    {
+                        var s = json ? JsonConvert.SerializeObject(r, Formatting.Indented) : r.ToString();
+                        _logger.Info(s);
+                    }
+                }
                 else
-                    _logger.Info(result);
+                {
+                    var s = json ? JsonConvert.SerializeObject(result, Formatting.Indented) : result.ToString();
+                    _logger.Info(s);
+                }
             }
         }
 
-        static MarketFilter CreateMarketFilterFromOptions(MarketFilterSubOptions options)
+        static void ReconfigureLoggers(LogLevel level)
         {
-            return new MarketFilter
+            foreach (var rule in LogManager.Configuration.LoggingRules)
             {
-                TextQuery = options.TextQuery,
-                EventTypeIds = ParseCommandLineList(options.EventTypeIds),
-                EventIds = ParseCommandLineList(options.EventIds),
-                CompetitionIds = ParseCommandLineList(options.CompetitionIds),
-                MarketIds = ParseCommandLineList(options.MarketIds),
-            };
-        }
+                rule.EnableLoggingForLevel(level);
+            }
 
-        static HashSet<string> ParseCommandLineList(string option)
-        {
-            return option == null ? null : new HashSet<string>(option.Split(','));
+            LogManager.ReconfigExistingLoggers();
         }
 
         static string GetPassword()

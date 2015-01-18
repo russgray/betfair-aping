@@ -12,9 +12,9 @@ namespace BetfairAPING.Entities.Betting
         public HashSet<string> CompetitionIds { get; set; }
         public HashSet<string> MarketIds { get; set; }
         public HashSet<string> Venues { get; set; }
-        public bool BspOnly { get; set; }
-        public bool TurnInPlayEnabled { get; set; }
-        public bool InPlayOnly { get; set; }
+        public bool? BspOnly { get; set; }
+        public bool? TurnInPlayEnabled { get; set; }
+        public bool? InPlayOnly { get; set; }
         public HashSet<string> MarketBettingTypes { get; set; }
         public HashSet<string> MarketCountries { get; set; }
         public HashSet<string> MarketTypeCodes { get; set; }
