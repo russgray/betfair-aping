@@ -6,7 +6,7 @@ namespace BetfairAPING.Console.Options
     class Options
     {
         [VerbOption("getaccountdetails", HelpText = "Returns the details relating your account")]
-        public AccountDetailsSubOptions GetAccountDetailsVerb { get; set; }
+        public CommonOptions GetAccountDetailsVerb { get; set; }
 
         [VerbOption("getaccountfunds", HelpText = "Get available to bet amount")]
         public AccountFundsSubOptions GetAccountFundsVerb { get; set; }
